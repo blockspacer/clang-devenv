@@ -2,17 +2,14 @@ FROM microblinkdev/centos-ninja:1.9.0 as ninja
 FROM microblinkdev/centos-ccache:3.7.5 as ccache
 FROM microblinkdev/centos-git:2.24.0 as git
 FROM microblinkdev/centos-python:3.8.0 as python
-
-FROM microblinkdev/centos-clang:8.0.0
+FROM microblinkdev/centos-clang:9.0.0
 
 COPY --from=ninja /usr/local/bin/ninja /usr/local/bin/
 COPY --from=python /usr/local /usr/local/
 COPY --from=git /usr/local /usr/local/
 COPY --from=ccache /usr/local /usr/local/
 
-# install LFS and setup global .gitignore for both
-# root and every other user logged with -u user:group docker run parameter
-RUN yum -y install zlib-devel && \
+RUN yum -y install zlib-devel make && \
     echo "bind '\"\\e[A\": history-search-backward'" >> ~/.bashrc && \
     echo "bind '\"\\e[B\": history-search-forward'" >> ~/.bashrc && \
     echo "bind \"set completion-ignore-case on\"" >> ~/.bashrc
