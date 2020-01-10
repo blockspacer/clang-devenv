@@ -9,7 +9,7 @@ COPY --from=python /usr/local /usr/local/
 COPY --from=git /usr/local /usr/local/
 COPY --from=ccache /usr/local /usr/local/
 
-RUN yum -y install zlib-devel make && \
+RUN yum -y install zlib-devel zlib-static make && \
     echo "bind '\"\\e[A\": history-search-backward'" >> ~/.bashrc && \
     echo "bind '\"\\e[B\": history-search-forward'" >> ~/.bashrc && \
     echo "bind \"set completion-ignore-case on\"" >> ~/.bashrc
